@@ -1,6 +1,6 @@
 {
   "name": "bbseeker-extended",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "Testing Framework for web applications which have front-end built on bobril javascript framework.",
   "author": {
     "name": "p.sulc"

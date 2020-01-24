@@ -5,15 +5,13 @@ import * as t from "./types";
 export { IBBBot } from "./types";
 
 /*
-    NOTE:
-    Jasmine does not support parallel testing for now, but the next spec test can still
+    NOTE: 
+    Jasmine does not support parallel testing for now (5.5.2019), but the next spec test can still
     start execution sooner if the currently one overlaps built-in time limit.
     Also there are requests for adding parallel testing, so the library will prepare for it
     and each test will run as a new instance of the class.      
     https://stackoverflow.com/questions/25652895/are-test-cases-in-jasmine-2-0-run-in-parallel
 */
-
-
 
 const _clickPointerType: string = "mouse"; // deprecated
 const _nonWritingKeyCodes: number[] = [8, 9, 16, 17, 18, 19, 20, 27, 33, 34, 35, 36, 37, 38, 39, 40, 45, 46, 91, 92, 93, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 144, 145];
@@ -650,14 +648,13 @@ class BBot implements t.IBBBot {
         /*
             For pointer events like pointerDown/Up it is necessary to merge MouseEvent and b.IBobrilMouseEvent
             because bobril while handling these pointer actions calls also internal pointerHandlers which 
-            builds its params from coming ev object. For these cases it is necessary to make available
+            builds its params from incoming ("native") ev object. For these cases it is necessary to make available
             also native event property to let bobril to build the params when it needs.
-              
         */
         return {
             x: clickedCoord.x,
             y: clickedCoord.y,
-            button: whichMouse,
+            button: whichMouse - 1, // native event returns values 0-2
             count: clickCount,
             shift: this.isKeyPressedAndHold(KeyCodes.Shift),
             ctrl: this.isKeyPressedAndHold(KeyCodes.Ctrl),
@@ -672,12 +669,12 @@ class BBot implements t.IBBBot {
             shiftKey: this.isKeyPressedAndHold(KeyCodes.Shift),
             ctrlKey: this.isKeyPressedAndHold(KeyCodes.Ctrl),
             altKey: this.isKeyPressedAndHold(KeyCodes.Alt),
-            buttons: whichMouse - 1,
+            buttons: whichMouse, // returns sum of all mouse button indicators pressed together (uses values from which prop => left and right pressed => 1+2=3) (because of bot does not support combine multiple buttons click it will return which prop value instead)
             clientX: clickedCoord.x,
             clientY: clickedCoord.y,
             metaKey: false,
             detail: pointerOrMouseEvent ? 0 : clickCount, // actual count is returned only if "click" handler should be called, for mouse and pointer handlers there is always 0
-            which: whichMouse
+            which: whichMouse // native events return values 1-3 (button +1) 
         } as t.IMouseEventInternal
     }
 
@@ -1022,7 +1019,7 @@ class BBot implements t.IBBBot {
             Writing keys was already handeled in keypress part.
             But in combination with pressed and hold CTRL it makes
             shorcats which are exceptions because it does not write
-            and have another purpose.    
+            and have another purpose.   
         */
         if (
             fakeWritting ||
@@ -1046,6 +1043,12 @@ class BBot implements t.IBBBot {
                 // TODO: handle focusing of diferrent tabIndex 
                 // TODO2: tab should be processed after keyDown to make able to repeat the action in cycle when TAB is pressed and hold 
                 // TODO3: if elm which should be focused by TAB is out of viewport, it should scroll to it
+                // TODO4: checknout chovani tabu pro radio buttony ... zda se, ze kdyz jsem aktualne na radio buttonu, tak browser preskoci vsechny radiobuttony
+                // se stejnou skupinou ktere jsou primym nasledujicim focusovatelnym elementem (3 stejny radio buttony, pak je skupinka dalsich 3 radiu buttonu,
+                // ktere maji vsecny spolecnou skupinu, ale jinou nez ta prvni => tak tab preskoci ty zbyvajici radia prvni skupiny a skoci na prvni radio druhy skupiny)
+                // situace2: mam skupinu 3 radii a uvnitr je jiny focusovatelny elm, treba text input (radio, textinput, radio, radio)
+                // => tak tab zafocusi prvni radio, pak textinput, pak druhy radio a dalsi tab to treti radio preskoci, protoze je opet primym sousedem radia ze stejne skupiny
+                // sipka dolu a nahoru nejen ze prehodi hodnotu true, ale taky ten danej radio element zafocusuje
         */
         if (keyCode === KeyCodes.Tab) {
             const vNodeToFocus: b.IBobrilCacheNode | null = h.getNextFocusableVNode(activeVNode);

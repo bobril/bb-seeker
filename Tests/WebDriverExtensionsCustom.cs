@@ -19,7 +19,7 @@ namespace BBSeeker.Tests
     public static class WebDriverExtensionsCustom
     {
 
-        public static string RootPath { get { return Directory.GetParent(Path.GetDirectoryName(Path.GetDirectoryName(TestContext.Curr‌​entContext.WorkDirectory))).FullName; } }
+        public static string RootPath { get { return Directory.GetParent(Path.GetDirectoryName(Path.GetDirectoryName(TestContext.CurrentContext.WorkDirectory))).FullName; } }
         public static string DriverPath { get { return RootPath + @"\bin\Debug\netcoreapp3.0"; } }
 
         public static readonly string DriverKey = "driver";

@@ -1,0 +1,31 @@
+{
+  "name": "bbseeker-extended",
+  "version": "2.1.4",
+  "description": "Testing Framework for web applications which have front-end built on bobril javascript framework.",
+  "author": {
+    "name": "p.sulc"
+  },
+  "dependencies": {
+    "bbseeker": "*",
+    "bobril": "*"
+  },
+  "main": "lib.js",
+  "publishConfig": {
+    "registry": "http://avignon.gmc.net:10004"
+  },
+  "bobril": {
+    "dependencies": "upgrade",
+    "example": "examples",
+    "compilerOptions": {
+      "noImplicitAny": true,
+      "noImplicitThis": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noImplicitReturns": true,
+      "noFallthroughCasesInSwitch": true,
+      "strictNullChecks": true,
+      "declaration": true,
+      "strictFunctionTypes": true
+    }
+  }
+}

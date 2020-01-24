@@ -1,0 +1,12 @@
+dist
+tmp
+tsconfig.json
+tslint.json
+typed
+.npmrc
+npm-debug.log
+yarn.lock
+yarn-error.log
+.vscode
+lib.js.map
+lib.d.ts

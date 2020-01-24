@@ -1,0 +1,94 @@
+      2.4.4 --------------------------------------------------
+      Added optional flag to GetData() to allow return of original data type instead of stringified value for use in Cypress.
+      2.4.3 --------------------------------------------------
+      Quick fix for key regex not being cloned properly.
+      2.4.2 --------------------------------------------------
+      Extended parent selector to allow search for an indirect parent.
+      2.4.1 --------------------------------------------------
+      Added getProperty function to allow reading any property and return it as string if possible.
+      2.4.0 --------------------------------------------------
+      Migrated to .NET Core 2.1 + increased required Selenium version to 3.141.0 (3.14.1) due to compatibility with .NET Core.
+      2.3.2 --------------------------------------------------
+      Added 3 automatic retry attempts for case that bobril is not yet initialized/loaded in the page. Should help with "b is not defined" error.
+      2.3.1 --------------------------------------------------
+      Fixes and refactors for getFileInput... methods (requires component with ctx.fileInput property with reference to related input element).
+      2.3.0 --------------------------------------------------
+      Added support for Selenium 3.12+ (BBSeeker injection now handles newly returned WebDriverException as well as old InvalidOperationException for backwards compatibility).
+      2.2.0 --------------------------------------------------
+      Added BBSeeker Node.js package contents. Added getCtx support for accesing ctx property values. Added experimental getFileInput method to access input of bobwai file selector components.
+      2.1.1 --------------------------------------------------
+      Added ability to select last element via child index filter, e.g. ":last()" and ":last()-2" where "-2" is offset from the end of the resultset.
+      2.1.0 --------------------------------------------------
+      Added ability to search elements by position in search results, e.g. tr/td[:1] will return every second cell from each row.
+      2.0.0 --------------------------------------------------
+      Possible BREAKING CHANGE! Minimum Selenium version is now 3.5.2. Some methods were also renamed to start with an uppercase to conform to the naming conventions. No script changes from 1.7.2.
+      1.7.2 --------------------------------------------------
+      Rewrite of selector parser to allow IDs and KEYs containing any characters (except "/" that still has to be replaced by "-" in a search expression).
+      1.7.1 --------------------------------------------------
+      Added GetLastClickPosition() method. Implemented like mouse event listener via javascript - i.e. requires that BBSeeker is injected before click.
+      1.7.0 --------------------------------------------------
+      Ability to search by bobril key - exact match or substring using '*' character as mask (represents 0-n characters).
+      1.6.4 --------------------------------------------------
+      Minor fix for strings containing both "=" and "~".
+      1.6.3 --------------------------------------------------
+      Added "*=" startsWith and "^=" endsWith operators for string comparison (text, data and attributes).
+      1.6.2 --------------------------------------------------
+      Compatibility update for the lastest version of cloud. Workarounds issue with undefined children on one of the roots by easing up on checks.
+      1.6.1 --------------------------------------------------
+      Added sibling selector for both previous and next sibling. Also with optional ability to specify custom offset.
+      1.6.0 --------------------------------------------------
+      All methods were extended with ability to start search from provided DOM element - requested by Tomas "Inza" Dosek.
+      1.5.3 --------------------------------------------------
+      Switched from window.spyTranslations() to b.spyTr() function for improved compatibility.
+      1.5.2 --------------------------------------------------
+      Added spyTranslations(boolean enabled) function support. Changed behaviour of fail in case that bobril is loaded but not ready yet. Will retry up to the timeout value.
+      1.5.1 --------------------------------------------------
+      Added methods for extracting bobril data and attributes from virtual DOM.
+      1.5.0 --------------------------------------------------
+      Update/workaround related to the new Bobril version
+      1.4.1 --------------------------------------------------
+      Improved error handling for undefined results from async search caused by virtual components.
+      1.4.0 --------------------------------------------------
+      Optimization - FindElementsWithTimeout now performs an immediate search and schedules only if nothing was found - might cause StaleReferenceException in some tests which relied on 100ms wait.
+      1.3.10 --------------------------------------------------
+      Added non-strict attribute and data filter.
+      1.3.9 --------------------------------------------------
+      Changed script execution to use " instead of '.
+      1.3.8 --------------------------------------------------
+      Fixed 'last()' with index combination, was off by 1.
+      1.3.7 --------------------------------------------------
+      Added option to use 'last()' with optional index deduction as index filter.
+      1.3.6 --------------------------------------------------
+      Improvements and fixes to the expression parser and to the attribute filter.
+      1.3.5 --------------------------------------------------
+      Added ability to use more filters at once. Combination with index filter is not supported
+      1.3.4 --------------------------------------------------
+      Fixed substring search - added check for undefined property children.
+      1.3.3 --------------------------------------------------
+      Added ability to filter elements by bobril data.
+      1.3.2 --------------------------------------------------
+      Added ability to filter elements by substring in their text.
+      1.3.1 --------------------------------------------------
+      Fixed issue with "~." not matching properly.
+      1.3.0 --------------------------------------------------
+      ID in search expression now requires "." prefix. It was necessary change due to not all IDs having '-' inside. Also '/' replacement char changed to "-".
+      1.2.3 --------------------------------------------------
+      If the first char in a component id is a '/', it is autoreplaced with '_' which allows matching with locator '_yourSearchedId'.
+      1.2.2 --------------------------------------------------
+      Fixed minor issue with skipping non-matching elements. Result was empty if element was a direct child.
+      1.2.1 --------------------------------------------------
+      Added option to search by attribute.
+      1.2.0 --------------------------------------------------
+      Breaking change. Simplified namespace to "BBSeeker".
+      1.1.1 --------------------------------------------------
+      Fixed issue with skipping non-matching nodes. Was not working correctly if there was multiple matches on a previous tag.
+      1.1.0 --------------------------------------------------
+      Added method which allows waiting until element is removed from a page.
+      1.0.3 --------------------------------------------------
+      Added option for selecting a parent and option to skip non-matching objects till match is found or end of a branch is reached.
+      1.0.2 --------------------------------------------------
+      Changed loading of script. It is now compiled to BBSeekerScript.cs via T4 template during design time. It should solve possible pathing issues on various environments.
+      1.0.1 --------------------------------------------------
+      fix for root level elements, i.e. modal window overlay
+      1.0.0 --------------------------------------------------
+      first version

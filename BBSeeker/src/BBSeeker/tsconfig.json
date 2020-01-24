@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "strictNullChecks": true,
+    "declaration": true,
+    "strictFunctionTypes": true,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "preserveConstEnums": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noLib": false,
+    "target": "es5",
+    "outDir": "js",
+    "lib": [
+      "es2015",
+      "es2015.promise",
+      "es5",
+      "dom"
+    ]
+  },
+  "exclude": [
+    "ts/npmPackages/*",
+"js/*"
+  ]
+}

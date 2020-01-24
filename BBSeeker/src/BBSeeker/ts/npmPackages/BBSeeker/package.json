@@ -1,0 +1,30 @@
+{
+  "name": "bbseeker",
+  "version": "1.0.5",
+  "description": "Framework used for searching elements in DOM and information about their representation in VDOM of Web Application build on Bobril Javascript framework.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "H.Hladik, P.Sulc",
+  "license": "ISC",
+  "main": "lib.js",
+  "publishConfig": {
+    "registry": "http://avignon.gmc.net:10004"
+  },
+  "bobril": {
+    "dependencies": "upgrade",
+    "example": "examples",
+    "compilerOptions": {
+      "noImplicitAny": true,
+      "noImplicitThis": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noImplicitReturns": true,
+      "noFallthroughCasesInSwitch": true,
+      "strictNullChecks": true,
+      "declaration": true,
+      "strictFunctionTypes": true
+    }
+  }
+}

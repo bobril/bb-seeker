@@ -1,0 +1,15 @@
+=============
+version 2.1.2
+=============
+- fixed spell syntax mistakes
+- fixed incorrectly inserted two enters instead of one in text area on ENTER key press action
+- fixed - clicking on specific element now clicks on the topmost element 
+(if the specified element (or its inner coordinates if specified) is overlapped by another element then click is emitted on the topmost element)
+- for click on specific element actions added possibility to specific element inner coordinates (within element) to click on ( by default is upper left corner point on 1x1 inner coordinates)    
+- added support for scrolling (on specific element or on coordinates):
+     - vertically ( by wheel button, by px step or to exact vertical position)
+     - horizontally ( by px step or to exact vertical position)
+- added support for virtual cursor move action (triggers bobril pointer/mouse move, mouseOver, mouseEnter, mouseLeave, mouseOut, mouseIn handlers)
+    (it is just move of virtual cursor (on bobril lvl) => it is not possible to move with physical cursor by JS => CSS hover style will not be applied)
+- added automatic scrolling to the element or coordinates which should be clicked or cursor move to if the element (coordinates) is out of the viewport. 
+- types and global interface relocated to separated module 

@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net471</TargetFramework>
+    <Version>2.4.4</Version>
+    <Authors>h.hladik, p.sulc</Authors>
+    <Company>Quadient s.r.o.</Company>
+    <NeutralLanguage></NeutralLanguage>
+    <Configurations>Debug;Release;NightBuild_Debug;NightBuild_Release</Configurations>
+    <Platforms>AnyCPU</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="src\BBSeeker\BBSeekerScript.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BBSeekerScript.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="src\BBSeeker\BBSeekerScript.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BBSeekerScript.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

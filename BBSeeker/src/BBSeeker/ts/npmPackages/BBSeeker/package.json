@@ -10,7 +10,7 @@
   "license": "ISC",
   "main": "lib.js",
   "publishConfig": {
-    "registry": "https://pkgs.dev.azure.com/storeit/_packaging/bobwai-npm-new/npm/registry"
+    "registry": "https://pkgs.dev.azure.com/storeit/_packaging/bobwai-npm/npm/registry/"
   },
   "bobril": {
     "dependencies": "upgrade",

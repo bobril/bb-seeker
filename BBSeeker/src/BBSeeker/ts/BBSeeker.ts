@@ -1500,7 +1500,7 @@ export module BBSeeker {
             throwErrVirtualComponentsPresent();
         }
 
-        let childrenStack: bb.IBobrilCacheNode[] = node.children as bb.IBobrilCacheNode[];
+        let childrenStack: bb.IBobrilCacheNode[] = node.children?.slice() as bb.IBobrilCacheNode[];
 
         while (childrenStack.length > 0) {
             const node: bb.IBobrilCacheNode = childrenStack[0];

@@ -9,6 +9,7 @@ Write-Host ""
 
 Write-Host -NoNewLine "Replacing export related string occurences ... "
 (Get-Content .\js\BBSeeker.js).replace('Object.defineProperty(exports, "__esModule", { value: true });', '') | Set-Content .\js\BBSeeker.js
+(Get-Content .\js\BBSeeker.js).replace('exports.BBSeeker = void 0;', '') | Set-Content .\js\BBSeeker.js
 (Get-Content .\js\BBSeeker.js).replace('(BBSeeker = exports.BBSeeker || (exports.BBSeeker = {}));', '(BBSeeker || (BBSeeker = {}));') | Set-Content .\js\BBSeeker.js
 Write-Host "Done!"
 

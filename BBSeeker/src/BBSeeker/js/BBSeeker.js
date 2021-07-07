@@ -49,7 +49,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 
-exports.BBSeeker = void 0;
+
 /*
 Sample search expressions:
 '*'                                     = any tag,

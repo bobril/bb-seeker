@@ -1,7 +1,7 @@
 {
   "name": "bbseeker-extended",
-  "version": "2.1.5",
-  "description": "Testing Framework for web applications which have front-end built on bobril javascript framework.",
+  "version": "2.1.11",
+  "description": "Library providing tools for emulating user actions in front-end applications built by Bobril javascript framework.",
   "author": {
     "name": "p.sulc"
   },
@@ -11,7 +11,7 @@
   },
   "main": "lib.js",
   "publishConfig": {
-    "registry": "http://avignon.gmc.net:10004"
+    "registry": "https://pkgs.dev.azure.com/storeit/_packaging/bobwai-npm/npm/registry/"
   },
   "bobril": {
     "dependencies": "upgrade",
@@ -25,7 +25,8 @@
       "noFallthroughCasesInSwitch": true,
       "strictNullChecks": true,
       "declaration": true,
-      "strictFunctionTypes": true
+      "strictFunctionTypes": true,
+      "strictPropertyInitialization": true
     }
   }
 }

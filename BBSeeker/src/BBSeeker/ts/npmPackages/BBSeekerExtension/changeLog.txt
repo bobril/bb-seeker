@@ -1,3 +1,8 @@
+==============
+version 2.1.11
+==============
+- fixed: Space and Enter keypress now fires also click event upon native button element as browser would do.
+
 =============
 version 2.1.2
 =============
@@ -12,4 +17,4 @@ version 2.1.2
 - added support for virtual cursor move action (triggers bobril pointer/mouse move, mouseOver, mouseEnter, mouseLeave, mouseOut, mouseIn handlers)
     (it is just move of virtual cursor (on bobril lvl) => it is not possible to move with physical cursor by JS => CSS hover style will not be applied)
 - added automatic scrolling to the element or coordinates which should be clicked or cursor move to if the element (coordinates) is out of the viewport. 
-- types and global interface relocated to separated module 
+- types and global interface relocated to separated module

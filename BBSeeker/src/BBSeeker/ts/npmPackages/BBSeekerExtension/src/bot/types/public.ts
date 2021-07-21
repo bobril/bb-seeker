@@ -1,12 +1,6 @@
-import *as b from "bobril";
+import * as b from "bobril";
+import * as t from "./internal";
 
-/**
- * !! IMPORTANT !! 
- * ---------------
- * This file is obsolete - It is still there because of backwards compatibility
- * but will be removed in one of the future updates.
- * All types arr already exported on BBBot module so use it from there.
- */
 
 export interface IBBBot {
 
@@ -422,10 +416,7 @@ export interface IBBBot {
      * in case that some occurs within the interval specified by @param maxNextActionDelayMS .
      * @param fakeWriting - Do not use, it has just historical meaning and is deprecated now.
      */
-    emitKeyPress(
-        keyCode: number,
-        maxNextActionDelayMS?: number,
-        terminateAfterFirstInvalidate?: boolean,
+    emitKeyPress(keyCode: number, maxNextActionDelayMS?: number, terminateAfterFirstInvalidate?: boolean,
         fakeWriting?: boolean
     ): Promise<void>
 
@@ -447,16 +438,26 @@ export interface IBBBot {
     ///////////////
 
     /**
-     * Returns current coordinates of virtual cursor. The cursor position
-     * is set on each mouse synthetic user action.
+     * Returns current coordinates of virtual cursor.
+     * The cursor position is set on each mouse synthetic user action.
+     * Coordinates are relative to viewport as would be for native events.
      */
     getVirtualCursorPosition(): ICoordinates // include this too?
 
     /**
-     * Updates settings which affects bot behavior. 
-     * @param settings - settings object of the bot
+     * Returns current settings of the bot.
      */
-    updateSettings(settings: IBotSettings): void;
+    getCurrentSettings(): IBotSettings;
+
+    /**
+     * Updates settings which affects bot behavior. 
+     * @param settings - settings object of the bot.
+     * @param rewrite - Specifies whether the update function will work as merge or rewrite mode.
+     * If the value is not specified or is set to false then the bot will merge current settings with 
+     * passed settings param object and override only specified fields. If true is passed then the
+     * actual settings will be completely removed and replaced by incoming settings.  
+     */
+    updateSettings(settings: IBotSettings, rewrite?: boolean): void;
 
     /**
      * Resets bot settings back to the default values.
@@ -494,11 +495,16 @@ export interface ICoordinates {
 type MouseTarget = HTMLElement | b.IBobrilCacheNode;
 
 interface IMouseTarget {
-    target?: MouseTarget,
-    coordinates?: ICoordinates
+    target?: MouseTarget;
+    coordinates?: ICoordinates;
 }
 
-export type MouseActionTarget = RequireAtLeastOne<IMouseTarget, "target" | "coordinates">;
+export type MouseActionTarget = t.RequireAtLeastOne<IMouseTarget, "target" | "coordinates">;
+
+interface IUserActionPostponeSettings {
+    maxNextActionDelayMS?: number;
+    continueOnInvalidationFinished?: boolean;
+}
 
 export interface IBotSettings extends IUserActionPostponeSettings {
     mouseAction?: IMouseActionSettings;
@@ -506,15 +512,28 @@ export interface IBotSettings extends IUserActionPostponeSettings {
 }
 
 export interface IMouseActionSettings extends IUserActionPostponeSettings {
-    //automaticScroll?: boolean; 
+    /**
+     * Specifies whether mouse action (click, pointer move etc.)
+     * should scroll to the element if not visible (before action itself).
+     * Scroll applies also to not visible elements nested
+     * in multiple scrollable elements.
+     * DEFAULT: true
+     * Note: It is recommended to keep default value because
+     * the element must be visible in most cases to be able
+     * to execute mouse action.
+     */
+    automaticScroll?: boolean;
+    /**
+     * Specifies whether the mouse action is executed
+     * on the topmost element (highest layer)
+     * in case when some element is overlapping another.
+     * DEFAULT: true 
+     * Note: It is recommended to keep the default value.
+     */
+    topMostElmAction?: boolean;
 }
 
 export interface IKeyboardActionSettings extends IUserActionPostponeSettings { }
-
-interface IUserActionPostponeSettings {
-    maxNextActionDelayMS?: number;
-    continueOnInvalidationFinished?: boolean;
-}
 
 export const enum KeyCodes {
     Backspace = 8,
@@ -539,58 +558,4 @@ export const enum KeyCodes {
     C = 67, // copy,
     V = 86, // paste
     X = 88, // cut
-}
-
-
-export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
-    Pick<T, Exclude<keyof T, Keys>>
-    & {
-        [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>
-    }[Keys]
-
-export interface IMouseEventInternal {
-    clientX: number;
-    clientY: number;
-    which: number;
-    button: number;
-    shiftKey: boolean;
-    ctrlKey: boolean;
-    altKey: boolean;
-    metaKey: boolean;
-    detail: number;
-    buttons: number;
-    target: HTMLElement;
-}
-
-export interface IPointerEventInternal extends IMouseEventInternal {
-    pointerType: string,
-    pointerId: number,
-    target: HTMLElement
-}
-
-export const enum EventHandlers {
-    leftClickHandlerName = "^click",
-    secondClickHandler = "click", // bobril adds two listeners on click with different internal names (each has different function - "^click" - main "click" -emits emitOnChange)
-    leftDoubleClickHandlerName = "^dblclick",
-    rightClickHandlerName = "contextmenu",
-    pointerDownHandlerName = "pointerdown", // bobril virtual pointer handlers handles all(touch, mouse and pointer) events => e.g. runs pointerDown and mouseDown
-    pointerUpHandlerName = "pointerup",
-    pointerMoveHandlerName = "pointermove",
-    pointerCancelHandlerName = "pointercancel",
-    keyDownHandlerName = "keydown",
-    keyPressHandlerName = "keypress",
-    keyUpHandlerName = "keyup",
-    blurHandlerName = "^blur",
-    focusHandlerName = "^focus",
-    selectStartHandlerName = "selectstart",
-    inputHandlerName = "input",
-    changeHandlerName = "change"
-}
-
-// Browser "button" property is in range 0-2 but bobril uses value from "which" property which is in range 1-3
-export const enum MouseButton {
-    None = 0,
-    Left = 1,
-    Wheel = 2,
-    Right = 3
 }

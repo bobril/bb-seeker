@@ -6,6 +6,7 @@ typed
 .npmrc
 npm-debug.log
 yarn.lock
+package.lock
 yarn-error.log
 .vscode
 lib.js.map

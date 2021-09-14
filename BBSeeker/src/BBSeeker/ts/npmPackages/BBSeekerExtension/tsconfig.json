@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
     "allowJs": false,
+    "allowSyntheticDefaultImports": true,
     "checkJs": false,
     "declaration": true,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
     "jsx": "react",
     "lib": [
       "es5",
@@ -11,6 +14,7 @@
       "es2015.core",
       "es2015.promise",
       "es2015.iterable",
+      "es2015.generator",
       "es2015.collection"
     ],
     "module": "commonjs",
@@ -21,20 +25,18 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "preserveConstEnums": false,
     "reactNamespace": "b",
     "removeComments": false,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "skipDefaultLibCheck": true,
     "sourceMap": true,
+    "strict": true,
     "strictFunctionTypes": true,
     "strictNullChecks": true,
+    "strictPropertyInitialization": true,
     "target": "es5",
     "resolveJsonModule": true
   },
-  "files": [
-    "node_modules/bobril/jsx.d.ts"
-  ],
   "include": [
     "**/*"
   ]

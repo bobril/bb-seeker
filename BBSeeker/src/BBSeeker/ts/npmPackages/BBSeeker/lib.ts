@@ -623,7 +623,7 @@ export module BBSeeker {
             } else {
                 findElementsWithTimeoutReschedule(expression, timeout, start, end, callback, root, ifVNodeFindNearestChildElm);
             }
-        } catch (err) {
+        } catch (err: any) {
             callback([null, formatError(err)]);
         }
     }
@@ -678,7 +678,7 @@ export module BBSeeker {
                 } else {
                     waitForElementNotPresentInternal(expression, timeout, start, end, callback, root);
                 }
-            } catch (err) {
+            } catch (err: any) {
                 callback([false, formatError(err)]);
             }
         }, 100);
@@ -701,7 +701,7 @@ export module BBSeeker {
             } else {
                 getAttributeWithTimeoutReschedule(expression, attributeName, timeout, start, end, callback, root);
             }
-        } catch (err) {
+        } catch (err: any) {
             callback([null, formatError(err)]);
         }
     }
@@ -730,7 +730,7 @@ export module BBSeeker {
             } else {
                 getDataWithTimeoutReschedule(expression, dataName, timeout, start, end, callback, root);
             }
-        } catch (err) {
+        } catch (err: any) {
             callback([null, formatError(err)]);
         }
     }
@@ -759,7 +759,7 @@ export module BBSeeker {
             } else {
                 getPropertyWithTimeoutReschedule(expression, propertyPath, timeout, start, end, callback, root);
             }
-        } catch (err) {
+        } catch (err:any) {
             callback([null, formatError(err)]);
         }
     }
@@ -788,7 +788,7 @@ export module BBSeeker {
             } else {
                 getCtxWithTimeoutReschedule(expression, ctxPropertyName, timeout, start, end, callback, root);
             }
-        } catch (err) {
+        } catch (err:any) {
             callback([null, formatError(err)]);
         }
     }
@@ -817,7 +817,7 @@ export module BBSeeker {
             } else {
                 getFileInputWithTimeoutReschedule(expression, timeout, start, end, callback, root);
             }
-        } catch (err) {
+        } catch (err:any) {
             callback([null, formatError(err)]);
         }
     }

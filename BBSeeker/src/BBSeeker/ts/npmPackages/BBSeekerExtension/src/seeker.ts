@@ -32,7 +32,7 @@ export function findElementsWithTimeout(expression: string, timeout?: number, ro
                 try {
                     const result: HTMLElement[] = processAsyncSearchResult<HTMLElement>(results);
                     resolve(result);
-                } catch (e) {
+                } catch (e:any) {
                     reject(e.message);
                     throw new Error(e.message);
                 }
@@ -100,7 +100,7 @@ export function getAttributeListWithTimeout(expression: string, attributeName: s
                 try {
                     const result: string[] = processAsyncSearchResult<string>(results);
                     resolve(result);
-                } catch (e) {
+                } catch (e:any) {
                     reject(e.message);
                     throw new Error(e.message);
                 }
@@ -173,7 +173,7 @@ export function getDataListWithTimeout(expression: string, dataName: string, tim
                 try {
                     const result: string[] = processAsyncSearchResult<string>(results);
                     resolve(result);
-                } catch (e) {
+                } catch (e:any) {
                     reject(e.message);
                     throw new Error(e.message);
                 }
@@ -238,7 +238,7 @@ export function getCtxValueListWithTimeout(expression: string, contextPropertyNa
                 try {
                     const result = processAsyncSearchResult<string | undefined>(results);
                     resolve(result);
-                } catch (e) {
+                } catch (e:any) {
                     reject(e.message);
                     throw new Error(e.message);
                 }
@@ -282,7 +282,7 @@ export function waitUntilElementIsNotPresent(expression: string, timeout?: numbe
                 try {
                     const result: boolean = processWaitUntilNotPresentResults(results, expression);
                     resolve(result);
-                } catch (e) {
+                } catch (e:any) {
                     reject(e.message);
                 }
             },
@@ -299,7 +299,7 @@ export function getLastClickPosition(): [number, number] {
     let coordinates: [number, number];
     try {
         coordinates = <[number, number]>BBSeeker.getLastClickPosition();
-    } catch (e) {
+    } catch (e:any) {
         console.warn(`Could not get last click position. Returning [0,0] as a failsafe. Reason: ${e.message}`)
         coordinates = [0, 0];
     }

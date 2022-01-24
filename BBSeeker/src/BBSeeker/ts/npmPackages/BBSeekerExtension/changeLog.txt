@@ -1,4 +1,9 @@
 ==============
+version 2.1.14
+==============
+- fixed: Fixed problem in focusing by tab process - bot incorrectly ignored elements with no dimensions.  
+
+==============
 version 2.1.13
 ==============
 - fixed: Fixed problem in focusing by tab process. Focus path incorrectly did not include currently focused node

@@ -14,7 +14,7 @@ export function isVisible(elm: HTMLElement, forTab?: boolean): boolean {
     if (
         !elm.tagName
         || elm.hidden
-        || (forTab && (elm.offsetHeight === 0 || elm.offsetWidth === 0))
+        || (!forTab && (elm.offsetHeight === 0 || elm.offsetWidth === 0))
         || compSt["display"] === "none" || compSt["visibility"] === "hidden"
 
     )

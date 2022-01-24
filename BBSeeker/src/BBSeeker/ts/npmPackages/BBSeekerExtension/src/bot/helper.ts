@@ -168,14 +168,30 @@ export function getNextFocusableVNode(curNode: b.IBobrilCacheNode | undefined, b
             function updateFocusPath(nextNode: b.IBobrilCacheNode): void {
                 const nextElm = nextNode.element as HTMLElement | undefined;
 
-                if (!nextElm || !isElmFocusable(nextElm, t.FocusableBy.KEYBOARD))
+                /**
+                * Currently focused element can be actaly not focusble by Tab 
+                * (tabindex -1 - changed by javscript dynamically or focused by script directly)
+                * but it is still necessary to include it to focus path array since 
+                * it's index in the array is a starting point from which is derived
+                * next/prev focusable node to focus.  
+                * 
+                */
+                if (!nextElm || (!isElmFocusable(nextElm, t.FocusableBy.KEYBOARD) && nextNode !== curNode))
                     return;
 
                 const isNextRadio = isElmRadioButton(nextElm);
                 const tabIdxValue = getElementTabIndex(nextElm);
-                const tabIdx = tabIdxValue == null && isFocusableByDefault(nextElm)
+                let tabIdx = tabIdxValue == null && isFocusableByDefault(nextElm)
                     ? 0
                     : tabIdxValue!;
+                
+                if(nextNode === curNode && tabIdx === -1){
+                    /**
+                     * Lets fake that the currently focused element 
+                     * is part of natural flow to ensure proper sorting order.
+                     */
+                    tabIdx = 0;
+                }
 
                 /** ===========================
                  * === Handle Special Cases ===

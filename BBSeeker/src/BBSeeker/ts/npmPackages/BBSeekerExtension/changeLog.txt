@@ -1,4 +1,10 @@
 ==============
+version 2.1.13
+==============
+- fixed: Fixed problem in focusing by tab process. Focus path incorrectly did not include currently focused node
+if the node is not supposed to be focusable (e.g. it could dynamically changed its tabIndex to -1 or just focused by script)
+
+==============
 version 2.1.12
 ==============
 - fixed: Fixed try/catch error typings to pass in new typescript version. 

@@ -1,4 +1,9 @@
 ==============
+version 2.1.15
+==============
+- fixed: Fixed problem of incorrect handling hidden radio buttons behavior.  
+
+==============
 version 2.1.14
 ==============
 - fixed: Fixed problem in focusing by tab process - bot incorrectly ignored elements with no dimensions.  

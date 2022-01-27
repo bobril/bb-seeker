@@ -2115,7 +2115,6 @@ class BBot implements t.IBBBot {
                     nodeElm.tagName.toLowerCase() === "input" &&
                     nodeElm.getAttribute("type") === "radio" &&
                     nodeElm.getAttribute("name") === rGroup &&
-                    h.isVisible(nodeElm) &&
                     !(node.element as HTMLInputElement).disabled
                 ) {
                     radios.push(node);

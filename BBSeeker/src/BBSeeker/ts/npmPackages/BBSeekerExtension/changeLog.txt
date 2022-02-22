@@ -1,4 +1,9 @@
 ==============
+version 2.1.16
+==============
+- fixed: Fixed problem of accessing afterFrameCallback before its initialization in some edge cases when checking if layout is rendered. 
+
+==============
 version 2.1.15
 ==============
 - fixed: Fixed problem of incorrect handling hidden radio buttons behavior.  

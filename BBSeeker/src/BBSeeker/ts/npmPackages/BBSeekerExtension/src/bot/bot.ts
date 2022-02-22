@@ -2289,6 +2289,8 @@ export function focusElement(element: HTMLElement): void {
 
 const _maxInvalidateCycles = 15;
 /**
+ * @deprecated - Use @throwIfNotRendered method instead.
+ * 
  * Returns a promise which indicates whether the DOM has been rendered completely or invalidation is still on. 
  * Also checks infinite invalidation for the specified timeout. Since this method does run the invalidation check in timeout loop
  * but constantly invokes recalculating the VDOM by calling b.syncUpdate in afterFrame the @param timeout is deprecated.   
@@ -2298,12 +2300,12 @@ const _maxInvalidateCycles = 15;
  */
 export function checkIfFullyRendered(timeout?: number | null, maxInvalidationCount?: number | null): Promise<boolean> {
     return new Promise((resolve) => {
-        if (!b.invalidated())
-            resolveAndCarryOn();
-
         const end = timeout ? b.now() + timeout * 1000 : undefined;
         let origAfterFrameCallback: ((root: string | b.IBobrilCacheNode[] | null | undefined) => void) | undefined;
         let curInvalidateCycle = 0;
+
+        if (!b.invalidated())
+            resolveAndCarryOn();
 
         if (timeout == null && maxInvalidationCount == null)
             maxInvalidationCount = _maxInvalidateCycles;
@@ -2366,18 +2368,18 @@ export async function throwIfNotRendered(invalidationCount?: number | null): Pro
         throw new Error("Not rendered, too many invalidation cycles in row.");
 
     function checkIfRenderedInternal(invalidationCount?: number | null): Promise<boolean> {
-        return new Promise((resolve, _reject) => {
+        return new Promise((resolve, _reject) => {                
+            let origAfterFrameCallback: ((root: b.IBobrilCacheChildren | null) => void) | undefined;
+
             if (!b.invalidated())
                 resolveAndCarryOn();
 
             if (invalidationCount == null)
                 invalidationCount = _maxInvalidateCycles;
 
-            let curInvalidateCycle = 0;
-
-            const origAfterFrameCallback = b.setAfterFrame(
+            origAfterFrameCallback = b.setAfterFrame(
                 (root: string | b.IBobrilCacheNode[] | null | undefined) => {
-                    origAfterFrameCallback(root);
+                    origAfterFrameCallback!(root);
 
                     if (!b.invalidated())
                         resolveAndCarryOn();
@@ -2388,6 +2390,8 @@ export async function throwIfNotRendered(invalidationCount?: number | null): Pro
                     curInvalidateCycle++;
                     b.syncUpdate();
                 });
+
+            let curInvalidateCycle = 0;
 
             function resolveAndCarryOn(failed?: boolean): void {
                 origAfterFrameCallback && b.setAfterFrame(origAfterFrameCallback);

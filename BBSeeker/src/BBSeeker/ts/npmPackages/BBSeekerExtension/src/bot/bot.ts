@@ -2175,7 +2175,8 @@ class BBot implements t.IBBBot {
             metaKey: false,
             keyCode: keyCode,
             charCode: keyCode,
-            preventDefault: () => { }
+            preventDefault: () => { },
+            stopPropagation: () => { }
         } as KeyboardEvent;
     }
 

@@ -1,6 +1,6 @@
 {
   "name": "bbseeker-extended",
-  "version": "2.1.17",
+  "version": "2.1.18",
   "description": "Library providing tools for emulating user actions in front-end applications built by Bobril javascript framework.",
   "author": {
     "name": "p.sulc"

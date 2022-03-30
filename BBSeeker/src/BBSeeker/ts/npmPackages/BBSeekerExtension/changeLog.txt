@@ -1,4 +1,9 @@
 ==============
+version 2.1.17
+==============
+- fixed: Switched click handlers names order and added stopPropagation mock callback to synthetic mouse event to be synchronized with latest bobril (20.0.0) update.
+
+==============
 version 2.1.16
 ==============
 - fixed: Fixed problem of accessing afterFrameCallback before its initialization in some edge cases when checking if layout is rendered. 

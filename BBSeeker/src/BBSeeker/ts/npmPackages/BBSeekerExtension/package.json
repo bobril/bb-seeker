@@ -1,6 +1,6 @@
 {
   "name": "bbseeker-extended",
-  "version": "2.1.16",
+  "version": "2.1.17",
   "description": "Library providing tools for emulating user actions in front-end applications built by Bobril javascript framework.",
   "author": {
     "name": "p.sulc"
@@ -11,7 +11,7 @@
   },
   "main": "lib.ts",
   "publishConfig": {
-    "registry": "https://pkgs.dev.azure.com/storeit/_packaging/bobwai-npm/npm/registry/\n\nalways-auth=true"
+    "registry": "https://pkgs.dev.azure.com/storeit/_packaging/bobwai-npm/npm/registry/"
   },
   "bobril": {
     "dependencies": "upgrade",

@@ -1,8 +1,7 @@
-export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
-    Pick<T, Exclude<keyof T, Keys>>
-    & {
-        [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>
-    }[Keys]
+export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> &
+    {
+        [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
+    }[Keys];
 
 export interface IMouseEventInternal {
     clientX: number;
@@ -20,15 +19,15 @@ export interface IMouseEventInternal {
 }
 
 export interface IPointerEventInternal extends IMouseEventInternal {
-    pointerType: string,
-    pointerId: number,
-    target: HTMLElement
+    pointerType: string;
+    pointerId: number;
+    target: HTMLElement;
 }
 
 export const enum EventHandlers {
-    leftClickHandlerName = "^click",
-    secondClickHandler = "click", // bobril adds two listeners on click with different internal names (each has different function - "^click" - main "click" -emits emitOnChange)
-    leftDoubleClickHandlerName = "^dblclick",
+    leftClickHandlerName = "click",
+    secondClickHandler = "^click", // bobril adds two listeners on click with different internal names (each has different function - "^click" - main "click" -emits emitOnChange)
+    leftDoubleClickHandlerName = "dblclick",
     rightClickHandlerName = "contextmenu",
     pointerDownHandlerName = "pointerdown", // bobril virtual pointer handlers handles all(touch, mouse and pointer) events => e.g. runs pointerDown and mouseDown
     pointerUpHandlerName = "pointerup",

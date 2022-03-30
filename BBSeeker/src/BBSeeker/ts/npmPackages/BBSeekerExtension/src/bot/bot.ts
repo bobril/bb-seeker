@@ -908,7 +908,8 @@ class BBot implements t.IBBBot {
              * Since bot handles elements state of preventDefault itself
              * just some empty dummy callback will save the day.
              */
-            preventDefault: () => { }
+            preventDefault: () => { },
+            stopPropagation: () => { }
         } as t.IMouseEventInternal
     }
 

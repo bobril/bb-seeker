@@ -389,10 +389,10 @@ export declare function styledDiv(children: IBobrilChildren, ...styles: any[]): 
 export interface IComponentFactory<TData extends Object> {
     (data?: TData, children?: IBobrilChildren): IBobrilNode;
 }
-export declare function createVirtualComponent<TData>(component: IBobrilComponent): IComponentFactory<TData>;
-export declare function createOverridingComponent<TData>(original: (data?: any, children?: IBobrilChildren) => IBobrilNode, after: IBobrilComponent): IComponentFactory<TData>;
+export declare function createVirtualComponent<TData extends Object>(component: IBobrilComponent): IComponentFactory<TData>;
+export declare function createOverridingComponent<TData extends Object>(original: (data?: any, children?: IBobrilChildren) => IBobrilNode, after: IBobrilComponent): IComponentFactory<TData>;
 export declare function createComponent<TData extends Object>(component: IBobrilComponent): IComponentFactory<TData>;
-export declare function createDerivedComponent<TData>(original: (data?: any, children?: IBobrilChildren) => IBobrilNode, after: IBobrilComponent): IComponentFactory<TData>;
+export declare function createDerivedComponent<TData extends Object>(original: (data?: any, children?: IBobrilChildren) => IBobrilNode, after: IBobrilComponent): IComponentFactory<TData>;
 export declare type IProp<T> = (value?: T) => T;
 export declare type IPropAsync<T> = (value?: T | PromiseLike<T>) => T;
 export interface IValueData<T> {

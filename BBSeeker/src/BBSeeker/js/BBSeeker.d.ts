@@ -1,5 +1,5 @@
 import * as bb from "./bobril/package/index";
-export declare module BBSeeker {
+export declare namespace BBSeeker {
     let frameCounter: number;
     let lastClickX: number;
     let lastClickY: number;

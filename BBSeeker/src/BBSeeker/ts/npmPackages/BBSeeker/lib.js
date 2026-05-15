@@ -1,57 +1,3 @@
-"use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-
-
 /*
 Sample search expressions:
 '*'                                     = any tag,
@@ -69,9 +15,9 @@ Sample search expressions:
 'div.bobwai--app-header-button/*[text=_APPLICATIONS]'
  = any tag with text _APPLICATIONS whose parent is div with bobril ID == bobwai--app-header-button
 */
-var BBSeeker;
+export var BBSeeker;
 (function (BBSeeker) {
-    var replacementChar = "-";
+    let replacementChar = "-";
     BBSeeker.frameCounter = 0;
     BBSeeker.lastClickX = 0;
     BBSeeker.lastClickY = 0;
@@ -79,7 +25,7 @@ var BBSeeker;
         BBSeeker.lastClickX = event.clientX;
         BBSeeker.lastClickY = event.clientY;
     });
-    var originalAfterFrame = b.setAfterFrame(function (c) {
+    var originalAfterFrame = b.setAfterFrame((c) => {
         originalAfterFrame(c);
         BBSeeker.frameCounter++;
     });
@@ -89,21 +35,21 @@ var BBSeeker;
      * @param root (optional) specify element which will serve as search root
      */
     function findElements(expression, root, ifVNodeFindNearestChildElm) {
-        var work = findElementsBody(expression, root);
-        var result = [];
+        const work = findElementsBody(expression, root);
+        let result = [];
         /*
             For testing purposes of bobwai components it is necessary to return closest DOM element if there is any.
             The error is thrown only if no element is found in children subtree at all
             (should not happen if the inserted searching expression is not total nonsence).
         */
         if (ifVNodeFindNearestChildElm) {
-            work.forEach(function (node) {
-                var elm = findNearesChildElm(node);
+            work.forEach((node) => {
+                const elm = findNearesChildElm(node);
                 elm && result.push(elm);
             });
             return result;
         }
-        work.forEach(function (node) {
+        work.forEach((node) => {
             if (node.element)
                 result.push(node.element);
             else
@@ -121,8 +67,8 @@ var BBSeeker;
      */
     function findElementsWithTimeout(expression, timeout, callback, root) {
         BBSeeker.frameCounter = 0;
-        var start = new Date().getTime();
-        var end = start + Math.abs(timeout);
+        let start = new Date().getTime();
+        let end = start + Math.abs(timeout);
         findElementsWithTimeoutBody(BBSeeker.frameCounter, expression, timeout, start, end, callback, root);
     }
     BBSeeker.findElementsWithTimeout = findElementsWithTimeout;
@@ -134,22 +80,11 @@ var BBSeeker;
      * @param callback which returns search results
      * @param root (optional) specify element which will serve as search root
      */
-    function findElementsWithTimeoutAsync(expression, timeout, callback, root, ifVNodeFindNearestChildElm) {
-        return __awaiter(this, void 0, void 0, function () {
-            var start, end;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        BBSeeker.frameCounter = 0;
-                        start = new Date().getTime();
-                        end = start + Math.abs(timeout);
-                        return [4 /*yield*/, findElementsWithTimeoutBody(BBSeeker.frameCounter, expression, timeout, start, end, callback, root, ifVNodeFindNearestChildElm)];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
+    async function findElementsWithTimeoutAsync(expression, timeout, callback, root, ifVNodeFindNearestChildElm) {
+        BBSeeker.frameCounter = 0;
+        let start = new Date().getTime();
+        let end = start + Math.abs(timeout);
+        await findElementsWithTimeoutBody(BBSeeker.frameCounter, expression, timeout, start, end, callback, root, ifVNodeFindNearestChildElm);
     }
     BBSeeker.findElementsWithTimeoutAsync = findElementsWithTimeoutAsync;
     /**
@@ -161,8 +96,8 @@ var BBSeeker;
      */
     function waitForElementNotPresent(expression, timeout, callback, root) {
         BBSeeker.frameCounter = 0;
-        var start = new Date().getTime();
-        var end = start + Math.abs(timeout);
+        let start = new Date().getTime();
+        let end = start + Math.abs(timeout);
         waitForElementNotPresentInternal(expression, timeout, start, end, callback, root);
     }
     BBSeeker.waitForElementNotPresent = waitForElementNotPresent;
@@ -174,22 +109,11 @@ var BBSeeker;
      * @param callback true if element is not available, false if timeout occured and element is still present
      * @param root (optional) specify element which will serve as search root
      */
-    function waitForElementNotPresentAsync(expression, timeout, callback, root) {
-        return __awaiter(this, void 0, void 0, function () {
-            var start, end;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        BBSeeker.frameCounter = 0;
-                        start = new Date().getTime();
-                        end = start + Math.abs(timeout);
-                        return [4 /*yield*/, waitForElementNotPresentInternal(expression, timeout, start, end, callback, root)];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
+    async function waitForElementNotPresentAsync(expression, timeout, callback, root) {
+        BBSeeker.frameCounter = 0;
+        let start = new Date().getTime();
+        let end = start + Math.abs(timeout);
+        await waitForElementNotPresentInternal(expression, timeout, start, end, callback, root);
     }
     BBSeeker.waitForElementNotPresentAsync = waitForElementNotPresentAsync;
     /**
@@ -199,12 +123,12 @@ var BBSeeker;
      * @param root (optional) specify element which will serve as search root
      */
     function getAttribute(expression, attributeName, root) {
-        var result = [];
-        var work = findElementsBody(expression, root);
-        for (var i = 0; i < work.length; i++) {
-            var elm = work[i].element;
+        let result = [];
+        let work = findElementsBody(expression, root);
+        for (let i = 0; i < work.length; i++) {
+            let elm = work[i].element;
             if (elm != undefined) {
-                var attrValue = elm["attributes"][attributeName];
+                let attrValue = elm["attributes"][attributeName];
                 if (attrValue == undefined) {
                     attrValue = elm[attributeName];
                 }
@@ -228,11 +152,11 @@ var BBSeeker;
     * @param preserveType (optional) allows to preserve value type
     */
     function getData(expression, dataName, root, preserveType) {
-        var result = [];
-        var work = findElementsBody(expression, root);
-        for (var i = 0; i < work.length; i++) {
-            var dataNode = work[i].data;
-            var dataValue = void 0;
+        let result = [];
+        let work = findElementsBody(expression, root);
+        for (let i = 0; i < work.length; i++) {
+            let dataNode = work[i].data;
+            let dataValue;
             if (dataNode != undefined) {
                 dataValue = dataNode[dataName];
                 if (!preserveType && typeof dataValue !== "string") {
@@ -251,14 +175,14 @@ var BBSeeker;
      * @param root (optional) specify element which will serve as search root
      */
     function getProperty(expression, propertyPath, root) {
-        var result = [];
+        let result = [];
         if (!propertyPath)
             throw new BBSeekerError("You have to provide property name or path relative to element as root. Path separator is \".\", e.g. \"component.id\"", ErrorType.PARSER);
-        var pathParts = propertyPath.replace(/\]$/, "").split(/\.|\[|\]\./);
-        var work = findElementsBody(expression, root);
-        var _loop_1 = function (i) {
-            var bobrilObject = work[i];
-            var propertyValue = void 0;
+        let pathParts = propertyPath.replace(/\]$/, "").split(/\.|\[|\]\./);
+        let work = findElementsBody(expression, root);
+        for (let i = 0; i < work.length; i++) {
+            let bobrilObject = work[i];
+            let propertyValue;
             pathParts.forEach(function (p) {
                 if (bobrilObject !== undefined) {
                     bobrilObject = bobrilObject[p];
@@ -269,9 +193,6 @@ var BBSeeker;
                 propertyValue = JSON.stringify(propertyValue);
             }
             result.push(propertyValue);
-        };
-        for (var i = 0; i < work.length; i++) {
-            _loop_1(i);
         }
         return result;
     }
@@ -286,10 +207,10 @@ var BBSeeker;
     }
     BBSeeker.getFileInput = getFileInput;
     function getFileInputInternal(expression, propertyName, root) {
-        var result = [];
-        var work = getCtxInternal(expression, propertyName, root);
-        for (var i = 0; i < work.length; i++) {
-            var element = work[i];
+        let result = [];
+        let work = getCtxInternal(expression, propertyName, root);
+        for (let i = 0; i < work.length; i++) {
+            let element = work[i];
             if (element != undefined) {
                 result.push(element);
             }
@@ -303,9 +224,9 @@ var BBSeeker;
      * @param root (optional) specify element which will serve as search root
      */
     function getCtx(expression, contextPropertyName, root) {
-        var result = [];
-        var work = getCtxInternal(expression, contextPropertyName, root);
-        for (var i = 0; i < work.length; i++) {
+        let result = [];
+        let work = getCtxInternal(expression, contextPropertyName, root);
+        for (let i = 0; i < work.length; i++) {
             result.push(stringifyNonStringValue(work[i]));
         }
         return result;
@@ -318,11 +239,11 @@ var BBSeeker;
      * @param root (optional) specify element which will serve as search root
      */
     function getCtxInternal(expression, contextPropertyName, root) {
-        var result = [];
-        var work = findElementsBody(expression, root);
-        for (var i = 0; i < work.length; i++) {
-            var context = work[i].ctx;
-            var contextValue = void 0;
+        let result = [];
+        let work = findElementsBody(expression, root);
+        for (let i = 0; i < work.length; i++) {
+            let context = work[i].ctx;
+            let contextValue;
             if (context != undefined) {
                 contextValue = context[contextPropertyName];
             }
@@ -331,7 +252,7 @@ var BBSeeker;
         return result;
     }
     function stringifyNonStringValue(value) {
-        var strValue;
+        let strValue;
         if (typeof value !== "string") {
             strValue = JSON.stringify(value);
         }
@@ -350,8 +271,8 @@ var BBSeeker;
      */
     function getAttributeWithTimeout(expression, attributeName, timeout, callback, root) {
         BBSeeker.frameCounter = 0;
-        var start = new Date().getTime();
-        var end = start + Math.abs(timeout);
+        let start = new Date().getTime();
+        let end = start + Math.abs(timeout);
         getAttributeWithTimeoutBody(BBSeeker.frameCounter, expression, attributeName, timeout, start, end, callback, root);
     }
     BBSeeker.getAttributeWithTimeout = getAttributeWithTimeout;
@@ -364,22 +285,11 @@ var BBSeeker;
      * @param callback returns search results.
      * @param root (optional) specify element which will serve as search root
      */
-    function getAttributeWithTimeoutAsync(expression, attributeName, timeout, callback, root) {
-        return __awaiter(this, void 0, void 0, function () {
-            var start, end;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        BBSeeker.frameCounter = 0;
-                        start = new Date().getTime();
-                        end = start + Math.abs(timeout);
-                        return [4 /*yield*/, getAttributeWithTimeoutBody(BBSeeker.frameCounter, expression, attributeName, timeout, start, end, callback, root)];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
+    async function getAttributeWithTimeoutAsync(expression, attributeName, timeout, callback, root) {
+        BBSeeker.frameCounter = 0;
+        let start = new Date().getTime();
+        let end = start + Math.abs(timeout);
+        await getAttributeWithTimeoutBody(BBSeeker.frameCounter, expression, attributeName, timeout, start, end, callback, root);
     }
     BBSeeker.getAttributeWithTimeoutAsync = getAttributeWithTimeoutAsync;
     /**
@@ -392,8 +302,8 @@ var BBSeeker;
      */
     function getDataWithTimeout(expression, dataName, timeout, callback, root) {
         BBSeeker.frameCounter = 0;
-        var start = new Date().getTime();
-        var end = start + Math.abs(timeout);
+        let start = new Date().getTime();
+        let end = start + Math.abs(timeout);
         getDataWithTimeoutBody(BBSeeker.frameCounter, expression, dataName, timeout, start, end, callback, root);
     }
     BBSeeker.getDataWithTimeout = getDataWithTimeout;
@@ -406,22 +316,11 @@ var BBSeeker;
      * @param callback webdriver callback returned by an async function it is a tuple: [string[], errorString]
      * @param root (optional) specify element which will serve as search root
      */
-    function getDataWithTimeoutAsync(expression, dataName, timeout, callback, root) {
-        return __awaiter(this, void 0, void 0, function () {
-            var start, end;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        BBSeeker.frameCounter = 0;
-                        start = new Date().getTime();
-                        end = start + Math.abs(timeout);
-                        return [4 /*yield*/, getDataWithTimeoutBody(BBSeeker.frameCounter, expression, dataName, timeout, start, end, callback, root)];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
+    async function getDataWithTimeoutAsync(expression, dataName, timeout, callback, root) {
+        BBSeeker.frameCounter = 0;
+        let start = new Date().getTime();
+        let end = start + Math.abs(timeout);
+        await getDataWithTimeoutBody(BBSeeker.frameCounter, expression, dataName, timeout, start, end, callback, root);
     }
     BBSeeker.getDataWithTimeoutAsync = getDataWithTimeoutAsync;
     /**
@@ -434,8 +333,8 @@ var BBSeeker;
  */
     function getPropertyWithTimeout(expression, propertyPath, timeout, callback, root) {
         BBSeeker.frameCounter = 0;
-        var start = new Date().getTime();
-        var end = start + Math.abs(timeout);
+        let start = new Date().getTime();
+        let end = start + Math.abs(timeout);
         getPropertyWithTimeoutBody(BBSeeker.frameCounter, expression, propertyPath, timeout, start, end, callback, root);
     }
     BBSeeker.getPropertyWithTimeout = getPropertyWithTimeout;
@@ -448,22 +347,11 @@ var BBSeeker;
      * @param callback webdriver callback returned by an async function it is a tuple: [string[], errorString]
      * @param root (optional) specify element which will serve as search root
      */
-    function getPropertyWithTimeoutAsync(expression, propertyPath, timeout, callback, root) {
-        return __awaiter(this, void 0, void 0, function () {
-            var start, end;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        BBSeeker.frameCounter = 0;
-                        start = new Date().getTime();
-                        end = start + Math.abs(timeout);
-                        return [4 /*yield*/, getPropertyWithTimeoutBody(BBSeeker.frameCounter, expression, propertyPath, timeout, start, end, callback, root)];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
+    async function getPropertyWithTimeoutAsync(expression, propertyPath, timeout, callback, root) {
+        BBSeeker.frameCounter = 0;
+        let start = new Date().getTime();
+        let end = start + Math.abs(timeout);
+        await getPropertyWithTimeoutBody(BBSeeker.frameCounter, expression, propertyPath, timeout, start, end, callback, root);
     }
     BBSeeker.getPropertyWithTimeoutAsync = getPropertyWithTimeoutAsync;
     /**
@@ -473,22 +361,11 @@ var BBSeeker;
      * @param callback returns search results.
      * @param root (optional) specify element which will serve as search root
      */
-    function getFileInputWithTimeout(expression, timeout, callback, root) {
-        return __awaiter(this, void 0, void 0, function () {
-            var start, end;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        BBSeeker.frameCounter = 0;
-                        start = new Date().getTime();
-                        end = start + Math.abs(timeout);
-                        return [4 /*yield*/, getFileInputWithTimeoutBody(BBSeeker.frameCounter, expression, timeout, start, end, callback, root)];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
+    async function getFileInputWithTimeout(expression, timeout, callback, root) {
+        BBSeeker.frameCounter = 0;
+        let start = new Date().getTime();
+        let end = start + Math.abs(timeout);
+        await getFileInputWithTimeoutBody(BBSeeker.frameCounter, expression, timeout, start, end, callback, root);
     }
     BBSeeker.getFileInputWithTimeout = getFileInputWithTimeout;
     /**
@@ -499,22 +376,11 @@ var BBSeeker;
      * @param callback webdriver callback returned by an async function it is a tuple: [HTMLElement[], errorString]
      * @param root (optional) specify element which will serve as search root
      */
-    function getFileInputWithTimeoutAsync(expression, timeout, callback, root) {
-        return __awaiter(this, void 0, void 0, function () {
-            var start, end;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        BBSeeker.frameCounter = 0;
-                        start = new Date().getTime();
-                        end = start + Math.abs(timeout);
-                        return [4 /*yield*/, getFileInputWithTimeoutBody(BBSeeker.frameCounter, expression, timeout, start, end, callback, root)];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
+    async function getFileInputWithTimeoutAsync(expression, timeout, callback, root) {
+        BBSeeker.frameCounter = 0;
+        let start = new Date().getTime();
+        let end = start + Math.abs(timeout);
+        await getFileInputWithTimeoutBody(BBSeeker.frameCounter, expression, timeout, start, end, callback, root);
     }
     BBSeeker.getFileInputWithTimeoutAsync = getFileInputWithTimeoutAsync;
     /**
@@ -527,8 +393,8 @@ var BBSeeker;
      */
     function getCtxWithTimeout(expression, ctxPropertyName, timeout, callback, root) {
         BBSeeker.frameCounter = 0;
-        var start = new Date().getTime();
-        var end = start + Math.abs(timeout);
+        let start = new Date().getTime();
+        let end = start + Math.abs(timeout);
         getCtxWithTimeoutBody(BBSeeker.frameCounter, expression, ctxPropertyName, timeout, start, end, callback, root);
     }
     BBSeeker.getCtxWithTimeout = getCtxWithTimeout;
@@ -541,22 +407,11 @@ var BBSeeker;
      * @param callback webdriver callback returned by an async function it is a tuple: [string[], errorString]
      * @param root (optional) specify element which will serve as search root
      */
-    function getCtxWithTimeoutAsync(expression, ctxPropertyName, timeout, callback, root) {
-        return __awaiter(this, void 0, void 0, function () {
-            var start, end;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        BBSeeker.frameCounter = 0;
-                        start = new Date().getTime();
-                        end = start + Math.abs(timeout);
-                        return [4 /*yield*/, getCtxWithTimeoutBody(BBSeeker.frameCounter, expression, ctxPropertyName, timeout, start, end, callback, root)];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
+    async function getCtxWithTimeoutAsync(expression, ctxPropertyName, timeout, callback, root) {
+        BBSeeker.frameCounter = 0;
+        let start = new Date().getTime();
+        let end = start + Math.abs(timeout);
+        await getCtxWithTimeoutBody(BBSeeker.frameCounter, expression, ctxPropertyName, timeout, start, end, callback, root);
     }
     BBSeeker.getCtxWithTimeoutAsync = getCtxWithTimeoutAsync;
     /**
@@ -572,16 +427,16 @@ var BBSeeker;
      * @param root element which will serve as search root
      */
     function findElementsBody(expression, root) {
-        var parsedExpression = parseExpression(expression);
-        var work = [];
+        let parsedExpression = parseExpression(expression);
+        let work = [];
         if (!root) {
             if (b == undefined) {
                 throw new BBSeekerError("Bobril not found in the page. Search terminated.", ErrorType.BOBRIL);
             }
-            var roots = b.getRoots();
-            var keys = Object.keys(roots);
-            for (var ri = 0; ri < keys.length; ri++) {
-                var rtc = roots[keys[ri]].c;
+            let roots = b.getRoots();
+            let keys = Object.keys(roots);
+            for (let ri = 0; ri < keys.length; ri++) {
+                let rtc = roots[keys[ri]].c;
                 if (rtc != undefined) {
                     work = work.concat(rtc);
                 }
@@ -595,16 +450,16 @@ var BBSeeker;
             }
         }
         else {
-            var rootNode = b.deref(root);
+            const rootNode = b.deref(root);
             rootNode && work.push(rootNode);
         }
-        for (var i = 0; i < parsedExpression.length; i++) {
-            var temp = [];
-            var locator = parsedExpression[i];
-            for (var j = 0; j < work.length; j++) {
+        for (let i = 0; i < parsedExpression.length; i++) {
+            let temp = [];
+            let locator = parsedExpression[i];
+            for (let j = 0; j < work.length; j++) {
                 if (locator.siblingOffset == 0) {
                     if (locator.childIndexFilter != undefined) {
-                        var matchingChildren = [];
+                        let matchingChildren = [];
                         matchingChildren = findElementsInternal(matchingChildren, work[j], locator, i === 0);
                         //child index: returned collection should be filled only to the level of the index, we return only one match per parent
                         //see matchObjectByFilter for more comments
@@ -625,11 +480,11 @@ var BBSeeker;
                     }
                 }
                 else {
-                    var parent_1 = work[j].parent;
-                    if (parent_1 && parent_1.children) {
-                        for (var k = 0; k < parent_1.children.length; k++) {
-                            var child = parent_1.children[k];
-                            var childWithOffset = parent_1.children[k + locator.siblingOffset];
+                    let parent = work[j].parent;
+                    if (parent && parent.children) {
+                        for (let k = 0; k < parent.children.length; k++) {
+                            let child = parent.children[k];
+                            let childWithOffset = parent.children[k + locator.siblingOffset];
                             if (child === work[j] && childWithOffset != undefined) {
                                 temp.push(childWithOffset);
                                 break;
@@ -645,7 +500,7 @@ var BBSeeker;
                 }
                 else {
                     if (temp.length + index < 0) {
-                        var idx = (index != -1) ? index + 1 : "";
+                        let idx = (index != -1) ? index + 1 : "";
                         throw new BBSeekerError("Index filter: 'last()" + idx + "' is outside of result set length: '" + temp.length + "'", ErrorType.SEARCH);
                     }
                     temp = temp.slice(temp.length + index, temp.length + index + 1);
@@ -674,7 +529,7 @@ var BBSeeker;
                 resultArray.push(bobrilObject.parent);
             }
             else { //if one of the parents determined by locator is being looked up
-                var tmpParentArray = [];
+                let tmpParentArray = [];
                 while (tmpParentArray.length == 0 && bobrilObject.parent) {
                     matchObject(bobrilObject.parent, tmpParentArray, locator);
                     bobrilObject = bobrilObject.parent;
@@ -693,9 +548,9 @@ var BBSeeker;
      */
     function findElementsRecursive(bobrilObject, resultArray, locator, anylevel) {
         if (bobrilObject != undefined && Array.isArray(bobrilObject.children)) {
-            for (var i = 0; i < bobrilObject.children.length; i++) {
+            for (let i = 0; i < bobrilObject.children.length; i++) {
                 var currentLocator = locator;
-                var child = bobrilObject.children[i];
+                let child = bobrilObject.children[i];
                 if (anylevel || child.tag == undefined) {
                     findElementsRecursive(child, resultArray, locator, anylevel);
                 }
@@ -721,9 +576,9 @@ var BBSeeker;
      */
     function findElementsWithTimeoutBody(lastCheck, expression, timeout, start, end, callback, root, ifVNodeFindNearestChildElm) {
         try {
-            var time = new Date().getTime();
+            let time = new Date().getTime();
             if (lastCheck == BBSeeker.frameCounter) {
-                var results = handleBobrilNotReadyForElements(findElements, expression, end, time, root, ifVNodeFindNearestChildElm);
+                let results = handleBobrilNotReadyForElements(findElements, expression, end, time, root, ifVNodeFindNearestChildElm);
                 if (results.length > 0) {
                     callback([results, null]);
                 }
@@ -755,7 +610,7 @@ var BBSeeker;
      */
     function findElementsWithTimeoutReschedule(expression, timeout, start, end, callback, root, ifVNodeFindNearestChildElm) {
         var lastCheck = BBSeeker.frameCounter;
-        setTimeout(function () {
+        setTimeout(() => {
             findElementsWithTimeoutBody(lastCheck, expression, timeout, start, end, callback, root, ifVNodeFindNearestChildElm);
         }, 100);
     }
@@ -768,9 +623,9 @@ var BBSeeker;
      */
     function waitForElementNotPresentInternal(expression, timeout, start, end, callback, root) {
         var lastCheck = BBSeeker.frameCounter;
-        setTimeout(function () {
+        setTimeout(() => {
             try {
-                var time = new Date().getTime();
+                let time = new Date().getTime();
                 if (lastCheck == BBSeeker.frameCounter) {
                     var results = findElements(expression, root);
                     if (results.length == 0) {
@@ -796,9 +651,9 @@ var BBSeeker;
     }
     function getAttributeWithTimeoutBody(lastCheck, expression, attributeName, timeout, start, end, callback, root) {
         try {
-            var time = new Date().getTime();
+            let time = new Date().getTime();
             if (lastCheck == BBSeeker.frameCounter) {
-                var results = handleBobrilNotReadyForData(getAttribute, expression, attributeName, end, time, root);
+                let results = handleBobrilNotReadyForData(getAttribute, expression, attributeName, end, time, root);
                 if (results.length > 0) {
                     callback([results, null]);
                 }
@@ -821,15 +676,15 @@ var BBSeeker;
     }
     function getAttributeWithTimeoutReschedule(expression, attributeName, timeout, start, end, callback, root) {
         var lastCheck = BBSeeker.frameCounter;
-        setTimeout(function () {
+        setTimeout(() => {
             getAttributeWithTimeoutBody(lastCheck, expression, attributeName, timeout, start, end, callback, root);
         }, 100);
     }
     function getDataWithTimeoutBody(lastCheck, expression, dataName, timeout, start, end, callback, root) {
         try {
-            var time = new Date().getTime();
+            let time = new Date().getTime();
             if (lastCheck == BBSeeker.frameCounter) {
-                var results = handleBobrilNotReadyForData(getData, expression, dataName, end, time, root);
+                let results = handleBobrilNotReadyForData(getData, expression, dataName, end, time, root);
                 if (results.length > 0) {
                     callback([results, null]);
                 }
@@ -852,15 +707,15 @@ var BBSeeker;
     }
     function getDataWithTimeoutReschedule(expression, dataName, timeout, start, end, callback, root) {
         var lastCheck = BBSeeker.frameCounter;
-        setTimeout(function () {
+        setTimeout(() => {
             getDataWithTimeoutBody(lastCheck, expression, dataName, timeout, start, end, callback, root);
         }, 100);
     }
     function getPropertyWithTimeoutBody(lastCheck, expression, propertyPath, timeout, start, end, callback, root) {
         try {
-            var time = new Date().getTime();
+            let time = new Date().getTime();
             if (lastCheck == BBSeeker.frameCounter) {
-                var results = handleBobrilNotReadyForData(getProperty, expression, propertyPath, end, time, root);
+                let results = handleBobrilNotReadyForData(getProperty, expression, propertyPath, end, time, root);
                 if (results.length > 0) {
                     callback([results, null]);
                 }
@@ -883,15 +738,15 @@ var BBSeeker;
     }
     function getPropertyWithTimeoutReschedule(expression, propertyPath, timeout, start, end, callback, root) {
         var lastCheck = BBSeeker.frameCounter;
-        setTimeout(function () {
+        setTimeout(() => {
             getPropertyWithTimeoutBody(lastCheck, expression, propertyPath, timeout, start, end, callback, root);
         }, 100);
     }
     function getCtxWithTimeoutBody(lastCheck, expression, ctxPropertyName, timeout, start, end, callback, root) {
         try {
-            var time = new Date().getTime();
+            let time = new Date().getTime();
             if (lastCheck == BBSeeker.frameCounter) {
-                var results = handleBobrilNotReadyForData(getCtx, expression, ctxPropertyName, end, time, root);
+                let results = handleBobrilNotReadyForData(getCtx, expression, ctxPropertyName, end, time, root);
                 if (results.length > 0) {
                     callback([results, null]);
                 }
@@ -914,15 +769,15 @@ var BBSeeker;
     }
     function getCtxWithTimeoutReschedule(expression, attributeName, timeout, start, end, callback, root) {
         var lastCheck = BBSeeker.frameCounter;
-        setTimeout(function () {
+        setTimeout(() => {
             getCtxWithTimeoutBody(lastCheck, expression, attributeName, timeout, start, end, callback, root);
         }, 100);
     }
     function getFileInputWithTimeoutBody(lastCheck, expression, timeout, start, end, callback, root) {
         try {
-            var time = new Date().getTime();
+            let time = new Date().getTime();
             if (lastCheck == BBSeeker.frameCounter) {
-                var results = handleBobrilNotReadyForData(getFileInputInternal, expression, "fileInput", end, time, root);
+                let results = handleBobrilNotReadyForData(getFileInputInternal, expression, "fileInput", end, time, root);
                 if (results.length > 0) {
                     callback([results, null]);
                 }
@@ -945,7 +800,7 @@ var BBSeeker;
     }
     function getFileInputWithTimeoutReschedule(expression, timeout, start, end, callback, root) {
         var lastCheck = BBSeeker.frameCounter;
-        setTimeout(function () {
+        setTimeout(() => {
             getFileInputWithTimeoutBody(lastCheck, expression, timeout, start, end, callback, root);
         }, 100);
     }
@@ -958,7 +813,7 @@ var BBSeeker;
     function matchObject(bobrilObject, resultArray, locator) {
         if (locator.tag == undefined || bobrilObject.tag === locator.tag || locator.tag === "*") {
             if (locator.id != undefined && bobrilObject.component != undefined) {
-                var matchedId = bobrilObject.component.id;
+                let matchedId = bobrilObject.component.id;
                 if (matchedId != undefined && matchedId.indexOf("/") != -1) {
                     matchedId = matchedId.replace(/\//g, replacementChar);
                 }
@@ -995,9 +850,9 @@ var BBSeeker;
             resultArray.push(bobrilObject);
         }
         else if (locator.filters) {
-            var match = bobrilObject;
-            for (var i = 0; i < locator.filters.length; i++) {
-                var filter = locator.filters[i];
+            let match = bobrilObject;
+            for (let i = 0; i < locator.filters.length; i++) {
+                let filter = locator.filters[i];
                 if (match != undefined && filter.joinType == JoinType.AND) {
                     match = matchObjectByFilter(match, locator, filter);
                 }
@@ -1075,8 +930,8 @@ var BBSeeker;
     }
     function matchStrictTextFilter(bobrilObject, locator, filter) {
         if (Array.isArray(bobrilObject.children)) {
-            for (var j = 0; j < bobrilObject.children.length; j++) {
-                var textChild = bobrilObject.children[j];
+            for (let j = 0; j < bobrilObject.children.length; j++) {
+                let textChild = bobrilObject.children[j];
                 if (typeof textChild === "string") {
                     var match = matchStrictValue(textChild, textChild["children"], filter);
                     if (match != undefined) {
@@ -1100,10 +955,10 @@ var BBSeeker;
     }
     function matchNonStrictTextFilter(bobrilObject, locator, filter) {
         if (Array.isArray(bobrilObject.children)) {
-            for (var j = 0; j < bobrilObject.children.length; j++) {
-                var textChild = bobrilObject.children[j];
+            for (let j = 0; j < bobrilObject.children.length; j++) {
+                let textChild = bobrilObject.children[j];
                 if (typeof textChild === "string") {
-                    var childText = textChild["children"];
+                    let childText = textChild["children"];
                     if (childText != undefined && childText.indexOf(filter.matchedValue) != -1) {
                         return sanitizeTextNode(textChild);
                     }
@@ -1212,10 +1067,10 @@ var BBSeeker;
      * @param expression search expression
      */
     function parseExpression(expression) {
-        var identifiers = expression.split(/\/(?=(?:(?:[^\[\]]*\[[^\[\]]*\])|(?:[^\[\]]*\[[^\[\]]*\]))*[^\[\]]*$)/);
-        var resultArray = [];
-        for (var i = 0; i < identifiers.length; i++) {
-            var componentId = identifiers[i];
+        let identifiers = expression.split(/\/(?=(?:(?:[^\[\]]*\[[^\[\]]*\])|(?:[^\[\]]*\[[^\[\]]*\]))*[^\[\]]*$)/);
+        let resultArray = [];
+        for (let i = 0; i < identifiers.length; i++) {
+            let componentId = identifiers[i];
             resultArray[i] = parseSelector(componentId);
         }
         return resultArray;
@@ -1225,15 +1080,15 @@ var BBSeeker;
     * @param identifier
     */
     function parseSelector(identifier) {
-        var selectorWithoutFilter = stripFilters(identifier);
-        var filters = extractFilters(identifier);
-        var regexMatches = /^([~|^])?([^.|^#]*)?((.?)(.+)?)/g.exec(selectorWithoutFilter);
-        var id = undefined;
-        var key = undefined;
-        var keyRegex = undefined;
-        var tag = undefined;
-        var offset = 0;
-        var matching = MatchingType.EXACT;
+        let selectorWithoutFilter = stripFilters(identifier);
+        let filters = extractFilters(identifier);
+        let regexMatches = /^([~|^])?([^.|^#]*)?((.?)(.+)?)/g.exec(selectorWithoutFilter);
+        let id = undefined;
+        let key = undefined;
+        let keyRegex = undefined;
+        let tag = undefined;
+        let offset = 0;
+        let matching = MatchingType.EXACT;
         if (regexMatches !== null) {
             if ("^" === regexMatches[1]) {
                 matching = MatchingType.PARENT;
@@ -1260,8 +1115,8 @@ var BBSeeker;
         if (key != undefined && key.indexOf("*") != -1) {
             keyRegex = new RegExp(key.replace(/\*/g, ".*"), "g");
         }
-        var rightSibling = tag ? /^>(\d*)>$/g.exec(tag) : null;
-        var leftSibling = tag ? /^<(\d*)<$/g.exec(tag) : null;
+        let rightSibling = tag ? /^>(\d*)>$/g.exec(tag) : null;
+        let leftSibling = tag ? /^<(\d*)<$/g.exec(tag) : null;
         if (rightSibling) {
             offset = (!rightSibling[1]) ? 1 : Number(rightSibling[1]);
         }
@@ -1280,17 +1135,17 @@ var BBSeeker;
         if (identifier.indexOf('[') == -1) {
             return [];
         }
-        var splits = identifier.substring(identifier.indexOf('[') + 1, identifier.length - 1).split(/(\]AND\[|\]OR\[)/i);
+        let splits = identifier.substring(identifier.indexOf('[') + 1, identifier.length - 1).split(/(\]AND\[|\]OR\[)/i);
         if (splits.length > 1 && splits.length % 2 != 1) {
             throw new BBSeekerError("Unexpected number of splits while parsing filters: " + splits, ErrorType.PARSER);
         }
-        var filters = [];
-        for (var i = 0; i < splits.length; i = i + 2) {
+        let filters = [];
+        for (let i = 0; i < splits.length; i = i + 2) {
             if (i == 0) {
                 filters.push(parseFilter(splits[i], null));
             }
             else {
-                var filter = parseFilter(splits[i], splits[i - 1]);
+                let filter = parseFilter(splits[i], splits[i - 1]);
                 if (filter.isIndexFilter()) {
                     throw new BBSeekerError("Index filter cannot be joined with other filters on the same level.", ErrorType.PARSER);
                 }
@@ -1300,9 +1155,9 @@ var BBSeeker;
         return filters;
     }
     function parseFilter(filterStr, joinSplitter) {
-        var f = new Filter();
-        var isFilterAttribute = false;
-        var isFilterData = false;
+        let f = new Filter();
+        let isFilterAttribute = false;
+        let isFilterData = false;
         if (filterStr.charAt(0) == "@" && filterStr.length > 2) {
             if (filterStr.indexOf("*=") > 0 && filterStr.indexOf("*=") < filterStr.length - 2) {
                 isFilterAttribute = true;
@@ -1313,7 +1168,7 @@ var BBSeeker;
                 f.comparison = Comparison.ENDS_WITH;
             }
             else {
-                var strictness = parseStrictness(filterStr);
+                let strictness = parseStrictness(filterStr);
                 if (strictness == Strictness.STRICT) {
                     isFilterAttribute = true;
                 }
@@ -1333,7 +1188,7 @@ var BBSeeker;
                 f.comparison = Comparison.ENDS_WITH;
             }
             else {
-                var strictness = parseStrictness(filterStr);
+                let strictness = parseStrictness(filterStr);
                 if (strictness == Strictness.STRICT) {
                     isFilterData = true;
                 }
@@ -1377,13 +1232,13 @@ var BBSeeker;
         }
         else if (isFilterAttribute) {
             f.filterType = FilterType.ATTRIBUTE;
-            var splitAttribute = extractFilterTuple(filterStr, f.isStrictFilter, f.comparison);
+            let splitAttribute = extractFilterTuple(filterStr, f.isStrictFilter, f.comparison);
             f.matchedName = splitAttribute[0].replace("@", "");
             f.matchedValue = splitAttribute[1];
         }
         else if (isFilterData) {
             f.filterType = FilterType.DATA;
-            var splitData = extractFilterTuple(filterStr, f.isStrictFilter, f.comparison);
+            let splitData = extractFilterTuple(filterStr, f.isStrictFilter, f.comparison);
             f.matchedName = splitData[0].replace("$", "");
             f.matchedValue = splitData[1];
         }
@@ -1418,8 +1273,8 @@ var BBSeeker;
         return f;
     }
     function parseStrictness(filterStr) {
-        var equalsIndex = filterStr.indexOf("=");
-        var tildeIndex = filterStr.indexOf("~");
+        let equalsIndex = filterStr.indexOf("=");
+        let tildeIndex = filterStr.indexOf("~");
         if (equalsIndex > 0 && tildeIndex > 0) {
             if (equalsIndex < tildeIndex) {
                 return Strictness.STRICT;
@@ -1438,19 +1293,19 @@ var BBSeeker;
         switch (comparison) {
             case Comparison.SIMPLE:
                 {
-                    var index = (strict) ? filter.indexOf("=") : filter.indexOf("~");
+                    let index = (strict) ? filter.indexOf("=") : filter.indexOf("~");
                     return [filter.slice(0, index), filter.slice(index + 1, filter.length)];
                 }
             case Comparison.STARTS_WITH:
                 {
                     var operator = "*=";
-                    var index = filter.indexOf(operator);
+                    let index = filter.indexOf(operator);
                     return [filter.slice(0, index), filter.slice(index + operator.length, filter.length)];
                 }
             case Comparison.ENDS_WITH:
                 {
                     var operator = "^=";
-                    var index = filter.indexOf(operator);
+                    let index = filter.indexOf(operator);
                     return [filter.slice(0, index), filter.slice(index + operator.length, filter.length)];
                 }
             default:
@@ -1458,10 +1313,9 @@ var BBSeeker;
         }
     }
     function getChildIndexFilter(filters) {
-        var childIndexFilter = undefined;
+        let childIndexFilter = undefined;
         if (filters) {
-            for (var _i = 0, filters_1 = filters; _i < filters_1.length; _i++) {
-                var filter = filters_1[_i];
+            for (let filter of filters) {
                 if (filter.isChildIndexFilter()) {
                     if (childIndexFilter != undefined) {
                         throw new BBSeekerError("Only one child index filter is allowed per search level but multiple were detected "
@@ -1473,11 +1327,16 @@ var BBSeeker;
         }
         return childIndexFilter;
     }
-    var Identifier = /** @class */ (function () {
-        function Identifier(tag, id, key, keyRegex, filters, siblingOffset, childIndexFilter, matchingType) {
-            if (siblingOffset === void 0) { siblingOffset = 0; }
-            if (childIndexFilter === void 0) { childIndexFilter = undefined; }
-            if (matchingType === void 0) { matchingType = MatchingType.EXACT; }
+    class Identifier {
+        tag;
+        id;
+        key;
+        keyRegex;
+        filters;
+        siblingOffset;
+        childIndexFilter;
+        matchingType;
+        constructor(tag, id, key, keyRegex, filters, siblingOffset = 0, childIndexFilter = undefined, matchingType = MatchingType.EXACT) {
             this.tag = tag;
             this.id = id;
             this.key = key;
@@ -1487,72 +1346,71 @@ var BBSeeker;
             this.childIndexFilter = childIndexFilter;
             this.matchingType = matchingType;
         }
-        Identifier.prototype.isMatchingExact = function () {
+        isMatchingExact() {
             return MatchingType.EXACT === this.matchingType;
-        };
-        Identifier.prototype.isMatchingAnyChild = function () {
+        }
+        isMatchingAnyChild() {
             return MatchingType.ANY_CHILD === this.matchingType;
-        };
-        Identifier.prototype.isMatchingParent = function () {
+        }
+        isMatchingParent() {
             return MatchingType.PARENT === this.matchingType;
-        };
-        Identifier.prototype.isDefined = function () {
+        }
+        isDefined() {
             return this.tag != undefined || this.id != undefined || this.key != undefined;
-        };
-        return Identifier;
-    }());
-    var Filter = /** @class */ (function () {
-        function Filter(filterType, isStrictFilter, comparison, matchedName, matchedValue) {
-            if (filterType === void 0) { filterType = FilterType.INDEX; }
-            if (isStrictFilter === void 0) { isStrictFilter = true; }
-            if (comparison === void 0) { comparison = Comparison.SIMPLE; }
+        }
+    }
+    class Filter {
+        filterType;
+        isStrictFilter;
+        comparison;
+        matchedName;
+        matchedValue;
+        joinType = JoinType.AND;
+        constructor(filterType = FilterType.INDEX, isStrictFilter = true, comparison = Comparison.SIMPLE, matchedName, matchedValue) {
             this.filterType = filterType;
             this.isStrictFilter = isStrictFilter;
             this.comparison = comparison;
             this.matchedName = matchedName;
             this.matchedValue = matchedValue;
-            this.joinType = JoinType.AND;
         }
-        Filter.prototype.isIndexFilter = function () {
+        isIndexFilter() {
             return FilterType.INDEX === this.filterType;
-        };
-        Filter.prototype.isChildIndexFilter = function () {
-            return FilterType.CHILD_INDEX === this.filterType;
-        };
-        Filter.prototype.isTextFilter = function () {
-            return FilterType.TEXT === this.filterType;
-        };
-        Filter.prototype.isAttributeFilter = function () {
-            return FilterType.ATTRIBUTE === this.filterType;
-        };
-        Filter.prototype.isDataFilter = function () {
-            return FilterType.DATA === this.filterType;
-        };
-        return Filter;
-    }());
-    var BBSeekerError = /** @class */ (function (_super) {
-        __extends(BBSeekerError, _super);
-        function BBSeekerError(message, type) {
-            var _this = _super.call(this, message) || this;
-            _this.message = message;
-            _this.type = type;
-            _this.name = "BBSeekerError";
-            _this["__proto__"] = BBSeekerError.prototype; // vyzkouset jestli to bude vypisovat spravny errory kdyz to vyhodim
-            _this.formatMessage();
-            return _this;
         }
-        BBSeekerError.prototype.formatMessage = function () {
+        isChildIndexFilter() {
+            return FilterType.CHILD_INDEX === this.filterType;
+        }
+        isTextFilter() {
+            return FilterType.TEXT === this.filterType;
+        }
+        isAttributeFilter() {
+            return FilterType.ATTRIBUTE === this.filterType;
+        }
+        isDataFilter() {
+            return FilterType.DATA === this.filterType;
+        }
+    }
+    class BBSeekerError extends Error {
+        message;
+        type;
+        name = "BBSeekerError";
+        constructor(message, type) {
+            super(message);
+            this.message = message;
+            this.type = type;
+            this["__proto__"] = BBSeekerError.prototype; // vyzkouset jestli to bude vypisovat spravny errory kdyz to vyhodim
+            this.formatMessage();
+        }
+        formatMessage() {
             this.message = this.name + "(" + ErrorType[this.type] + "): " + this.message;
-        };
-        return BBSeekerError;
-    }(Error));
-    var MatchingType;
+        }
+    }
+    let MatchingType;
     (function (MatchingType) {
         MatchingType[MatchingType["EXACT"] = 0] = "EXACT";
         MatchingType[MatchingType["ANY_CHILD"] = 1] = "ANY_CHILD";
         MatchingType[MatchingType["PARENT"] = 2] = "PARENT";
     })(MatchingType || (MatchingType = {}));
-    var FilterType;
+    let FilterType;
     (function (FilterType) {
         FilterType[FilterType["INDEX"] = 0] = "INDEX";
         FilterType[FilterType["CHILD_INDEX"] = 1] = "CHILD_INDEX";
@@ -1560,26 +1418,26 @@ var BBSeeker;
         FilterType[FilterType["ATTRIBUTE"] = 3] = "ATTRIBUTE";
         FilterType[FilterType["DATA"] = 4] = "DATA";
     })(FilterType || (FilterType = {}));
-    var ErrorType;
+    let ErrorType;
     (function (ErrorType) {
         ErrorType[ErrorType["BOBRIL"] = 0] = "BOBRIL";
         ErrorType[ErrorType["PARSER"] = 1] = "PARSER";
         ErrorType[ErrorType["SEARCH"] = 2] = "SEARCH";
         ErrorType[ErrorType["TIMEOUT"] = 3] = "TIMEOUT";
     })(ErrorType || (ErrorType = {}));
-    var JoinType;
+    let JoinType;
     (function (JoinType) {
         JoinType[JoinType["AND"] = 0] = "AND";
         JoinType[JoinType["OR"] = 1] = "OR";
     })(JoinType || (JoinType = {}));
-    var Comparison;
+    let Comparison;
     (function (Comparison) {
         Comparison[Comparison["SIMPLE"] = 0] = "SIMPLE";
         Comparison[Comparison["STARTS_WITH"] = 1] = "STARTS_WITH";
         Comparison[Comparison["ENDS_WITH"] = 2] = "ENDS_WITH";
         Comparison[Comparison["COMPLEX"] = 3] = "COMPLEX";
     })(Comparison || (Comparison = {}));
-    var Strictness;
+    let Strictness;
     (function (Strictness) {
         Strictness[Strictness["NOT_VALID"] = 0] = "NOT_VALID";
         Strictness[Strictness["STRICT"] = 1] = "STRICT";
@@ -1606,13 +1464,12 @@ var BBSeeker;
      * @param returnEvenNull - specifies whether method should return null if none elm is found or throw an error
      */
     function findNearesChildElm(node, returnEvenNull) {
-        var _a;
         if (!node) {
             if (returnEvenNull)
                 return null;
             throwErrVirtualComponentsPresent();
         }
-        var elm = node.element;
+        let elm = node.element;
         if (elm)
             return elm;
         if (!node.children) {
@@ -1620,12 +1477,12 @@ var BBSeeker;
                 return null;
             throwErrVirtualComponentsPresent();
         }
-        var childrenStack = (_a = node.children) === null || _a === void 0 ? void 0 : _a.slice();
+        let childrenStack = node.children?.slice();
         while (childrenStack.length > 0) {
-            var node_1 = childrenStack[0];
-            if (node_1.element)
-                return node_1.element;
-            node_1.children.forEach(function (child) {
+            const node = childrenStack[0];
+            if (node.element)
+                return node.element;
+            node.children.forEach(child => {
                 childrenStack.push(child);
             });
             childrenStack.shift();

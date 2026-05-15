@@ -19,7 +19,7 @@ Sample search expressions:
  = any tag with text _APPLICATIONS whose parent is div with bobril ID == bobwai--app-header-button
 */
 
-export module BBSeeker {
+export namespace BBSeeker {
 
     //represents bobril, e.g. definition (bb) is not imported in compiled javascript, it is used only to provide data model for TypeScript during coding
     declare const b: any;

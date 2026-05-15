@@ -1,5 +1,5 @@
 import * as bb from "./bobril/package/index";
-export declare module BBSeeker {
+export declare namespace BBSeeker {
     let frameCounter: number;
     let lastClickX: number;
     let lastClickY: number;
@@ -51,12 +51,13 @@ export declare module BBSeeker {
      */
     function getAttribute(expression: string, attributeName: string, root?: HTMLElement): (string | undefined)[];
     /**
-     * Returns selected bobril data node value.
-     * @param expression BBSeeker search expression
-     * @param dataName data node name
-     * @param root (optional) specify element which will serve as search root
-     */
-    function getData(expression: string, dataName: string, root?: HTMLElement): (string | undefined)[];
+    * Returns selected bobril data node value.
+    * @param expression BBSeeker search expression
+    * @param dataName data node name
+    * @param root (optional) specify element which will serve as search root
+    * @param preserveType (optional) allows to preserve value type
+    */
+    function getData<TValue = string>(expression: string, dataName: string, root?: HTMLElement, preserveType?: boolean): (TValue | undefined)[];
     /**
      * Returns selected bobril property value.
      * @param expression BBSeeker search expression

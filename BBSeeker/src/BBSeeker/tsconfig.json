@@ -13,15 +13,14 @@
     "removeComments": false,
     "sourceMap": true,
     "preserveConstEnums": false,
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
     "noLib": false,
-    "target": "es5",
+    "target": "ES2022",
+    "rootDir": "ts",
     "outDir": "js",
     "lib": [
-      "es2015",
-      "es2015.promise",
-      "es5",
+      "ES2022",
       "dom"
     ]
   },
